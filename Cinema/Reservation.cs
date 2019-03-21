@@ -12,7 +12,7 @@ namespace Cinema
         IMovie Movie { get; }
         decimal TicketPrice { get; }
         void AddSeat(ISeat seat);
-        void AddSeats(List<ISeat> seat);
+        void AddSeats(List<ISeat> seats);
         void RemoveSeat(ISeat seat);
         string SeatList();
 
@@ -34,28 +34,94 @@ namespace Cinema
         }
         public void AddSeat(ISeat seat)
         {
-            //if movie is right
-            //if row is okay
-            //if number of seat is okay
-            //add seat
+            if (seat == null)
+            {
+                return;
+            }
+            if(SeatExists(seat) && SeatNotTaken(seat))
+            {
+                seat.TakeSeat();
+                Seats.Add(seat);
+            }
+            else
+            {
+                throw new ArgumentException("Seat either can't exist or is already taken");
+            }
         }
 
         public void RemoveSeat(ISeat seat)
         {
-            //if movie is right
-            //if row is okay
-            //if number of seat is okay
-            //remove seat
+            if (seat == null)
+            {
+                throw new ArgumentException("Seat either can't exist or doesn't exist in this reservation");
+            }
+            if (SeatExists(seat) && SeatExistsInList(seat))
+            {
+                Seats.Remove(seat);
+            }
+            else
+            {
+                throw new ArgumentException("Seat either can't exist or doesn't exist in this reservation");
+            }
         }
 
         public string SeatList()
         {
-            throw new NotImplementedException();
+            string list = $"Movie:{Movie.Title}\n";
+            if (Seats.Count == 0)
+            {
+                return list;
+            }
+            else
+            {
+                foreach (ISeat s in Seats)
+                {
+                    list += $"Row Number:{s.RowNumber}, Seat Number:{s.SeatNumber}\n";
+                }
+                return list;
+            }
+
         }
 
-        public void AddSeats(List<ISeat> seat)
+        public void AddSeats(List<ISeat> seats)
         {
-            throw new NotImplementedException();
+            foreach(ISeat s in seats)
+            {
+                AddSeat(s);
+            }
+        }
+        private bool SeatExists(ISeat seat)
+        {
+            if(seat.RowNumber>0 && seat.RowNumber < Movie.NumberOfRows)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool SeatNotTaken(ISeat seat)
+        {
+            if (seat.IsTaken)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        private bool SeatExistsInList(ISeat seat)
+        {
+            foreach(ISeat s in Seats)
+            {
+                if(s.SeatNumber==seat.SeatNumber && s.RowNumber == seat.RowNumber)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

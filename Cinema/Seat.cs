@@ -11,6 +11,8 @@ namespace Cinema
         int SeatNumber { get; }
         int RowNumber { get; }
         bool IsTaken { get; }
+        string GetInformation();
+        bool TakeSeat();
     }
     public class Seat : ISeat
     {
@@ -51,6 +53,19 @@ namespace Cinema
                 result += "not taken.";
             }
             return result;
-        } 
+        }
+        public bool TakeSeat()
+        {
+            if (!IsTaken)
+            {
+                IsTaken = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
     }
 }
