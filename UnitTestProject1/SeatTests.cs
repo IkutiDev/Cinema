@@ -7,16 +7,26 @@ namespace UnitTestProject1
     public class SeatTests
     {
         Seat seat;
-        Movie movie;
         [TestInitialize]
         public void TestInitialize()
         {
-            movie = new Movie("Test", "Test description", 1, 5, new DateTime(2018, 6, 10));
-            seat = new Seat(1,15,movie);
+            seat = new Seat(1,15);
+        }
+        [TestMethod]
+        public void GetInformationSeat()
+        {
+            string result = seat.GetInformation();
+            StringAssert.Contains(result,"Seat Number:15,");
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+    "SeatNumber can't be higher than 20 or lower than 0.")]
+        public void WrongSeatNumber()
+        {
+            seat = new Seat(1,25);
         }
         public void TestCleanup()
         {
-            movie = null;
             seat = null;
         }
     }

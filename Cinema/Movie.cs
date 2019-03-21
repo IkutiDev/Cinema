@@ -42,7 +42,7 @@ namespace Cinema
             {
                 for(int j = 0; j < 20; j++)
                 {
-                    Seats.Add(new Seat(i,j,this));
+                    Seats.Add(new Seat(i,j));
                 }
             }
         }

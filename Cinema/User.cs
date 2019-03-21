@@ -11,9 +11,9 @@ namespace Cinema
         List<IReservation> Reservations { get; }
         string ListReservations();
         string ShowReservation(int id);
-        void DeleteReservation(int id);
+        bool DeleteReservation(int id);
         void DeleteAllReservations();
-        void AddReservation(IReservation reservation);
+        bool AddReservation(IReservation reservation);
         string ShowUserInfo();
     }
     public class User : IUser
@@ -62,11 +62,16 @@ namespace Cinema
         {
             return $"Email:{Email} Name:{Name} Surname:{Surname}";
         }
-        public void DeleteReservation(int id)
+        public bool DeleteReservation(int id)
         {
             if (ReservationExists(id))
             {
                 Reservations.RemoveAt(id);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -75,11 +80,16 @@ namespace Cinema
             Reservations = new List<IReservation>();
         }
 
-        public void AddReservation(IReservation reservation)
+        public bool AddReservation(IReservation reservation)
         {
             if (reservation != null)
             {
                 Reservations.Add(reservation);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
         private bool ReservationExists(int id)

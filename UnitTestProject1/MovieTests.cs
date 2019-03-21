@@ -10,7 +10,7 @@ namespace UnitTestProject1
         [TestInitialize]
         public void TestInitialize()
         {
-            movie = new Movie("Test", "Test description", 1,5, new DateTime(2018, 6, 10));
+            movie = new Movie("Test", "Test description", 1,5, new DateTime(2019, 6, 10));
         }
         public void TestCleanup()
         {
